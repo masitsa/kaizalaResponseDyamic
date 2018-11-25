@@ -43,6 +43,10 @@
         var _isLocationNotFetched = true;
         var _currentLocation = {};
         var selectedOptions = {};
+        var imagesId = [];
+        var imagesArray = [];
+        var tempImage = "";
+        var countImage = 0;
 
         // constants
         var TOTAL_PAGE = 3;
@@ -154,8 +158,19 @@
                         questionToAnswerMap[x] = date.getTime();
                     }
 
+                    // else if(fieldType == 6){
+                    //     questionToAnswerMap[x] = document.getElementById(compressedTitle).getAttribute("src");
+                    // }
                     else if(fieldType == 6){
-                        questionToAnswerMap[x] = document.getElementById(compressedTitle).getAttribute("src");
+                        for (let imgId = 0; imgId < imagesId.length - 1; imgId++) {
+                            let imgSrc = document.getElementById(imagesId[imgId]).getAttribute("src");
+                            imagesArray.push(imgSrc);
+                        }
+                        if (imagesArray.length >= 0) {
+                            questionToAnswerMap[x] = imagesArray[0];
+                        } else if (imagesArray.length < 0) {
+                            questionToAnswerMap[x] = tempImage;
+                        }
                     }
                     
                     else {
@@ -301,6 +316,7 @@
                     fieldTitleDiv.innerText = _strings[fieldTitle];
                     
                     if(fieldInputType == "image"){
+                        // compressedTitle =compressedTitle + new Date().getTime();
                         var fieldInput = KASClient.UI.getElement("div");
                         KASClient.UI.clearElement(fieldInput);
                         //put an image tag icon
@@ -310,7 +326,12 @@
                             "padding-left": "15pt",
                             "padding-top": "0px"
                         });
-                        img.id = compressedTitle;
+                        
+                        var time = new Date().getTime();
+                        var imgId = compressedTitle;
+                        
+                        img.id = imgId;
+                        imagesId.push(imgId);
                         
                         img.setAttribute("src", "AttachmentIcon.png");
                         //set an event for when the tag is clicked
@@ -320,8 +341,10 @@
                                     return;
                                 }
                                 img.setAttribute("src", selectedImagePath);
+                                addImage(compressedTitle, fieldInput);
                             });
                         };
+                        
                         //adds image element to the imageDiv
                         KASClient.UI.addElement(img, fieldInput);
                     }
@@ -387,6 +410,41 @@
                     //Add items to page 1
                     KASClient.UI.addElement(fieldDiv, pageOneDiv);
                 }
+            }
+        }
+
+        function addImage(title, fieldInput) {
+            
+            if (countImage < 4) {
+                
+                var img = KASClient.UI.getElement("img", {
+                    "width": "60",
+                    "height": "60",
+                    "padding-left": "15pt",
+                    "padding-top": "3px",
+                    "padding-bottom": "3px"
+                });
+                
+                var imgId = title + "" + new Date().getTime();
+                img.id = imgId;
+                
+                imagesId.push(imgId);
+                img.setAttribute("src", "plusIcon.png");
+                
+                //set an event for when the tag is clicked
+                img.onclick = function() {
+                    KASClient.App.showImagePickerAsync(function(selectedImagePath, error) {
+                        if (error != null) {
+                            return;
+                        }
+                        countImage++;
+                        img.setAttribute("src", selectedImagePath);
+
+                        addImage(title, fieldInput);
+                    });
+                }
+                
+                KASClient.UI.addElement(img, fieldInput);
             }
         }
 
@@ -683,32 +741,39 @@ _currentLocation["lt"] + "," + _currentLocation["lg"] + "&key=AIzaSyAMfrWKiELcjg
                     let fieldId = fieldDescription["id"];
                     let fieldTitle = fieldDescription["title"];
                     let fieldType = fieldDescription["type"];
+                    let isOptional = fieldDescription["optl"];
+                    let invis = fieldDescription["invis"];
+                    let editable = fieldDescription["editable"];
+                    let er = fieldDescription["er"];
+                    let dt = fieldDescription["dt"];
                     let fieldInputType = "";
                     var compressedTitle = fieldTitle.replace(/\s+/g, '');
                     
-                    if((fieldTitle != "Name") && (fieldTitle != "Phone") && (fieldTitle != "Location") && (fieldTitle != "Response Time"))
+                    if((fieldTitle != "Logo") && (fieldTitle != "Name") && (fieldTitle != "Phone") && (fieldTitle != "Location") && (fieldTitle != "Response Time"))
                     {
                         let formValue = "";
                         if(fieldType == 0){
                             formValue = selectedOptions[compressedTitle];
-                            
-                            if(formValue !== 0){
-                                if((formValue == "") || (formValue == null)){
-                                    nextButtonIsDisabled = true;
-                                }
-                            }
                         }
 
                         else if(fieldType == 6){
-                            formValue = document.getElementById(compressedTitle).getAttribute("src");
+                            //formValue = selectedOptions[compressedTitle];
+                            // alert(JSON.stringify(fieldDescription));
+                            // alert(fieldTitle);
+                            // alert(isOptional);
+                            // alert(invis);
+                            // alert(editable);
+                            // alert(er);
+                            // alert(dt);
+                            // document.getElementById("page1").innerHTML = JSON.stringify(fieldDescription);
                         }
 
                         else{
                             formValue = document.getElementById(compressedTitle).value;
+                        }
                         
-                            if((formValue == "") || (formValue == null)){
-                                nextButtonIsDisabled = true;
-                            }
+                        if((formValue == "") || (formValue == null)){
+                            nextButtonIsDisabled = true;
                         }
                     }
                 }
@@ -889,7 +954,7 @@ _currentLocation["lt"] + "," + _currentLocation["lg"] + "&key=AIzaSyAMfrWKiELcjg
                     "padding-bottom": "10pt"
                 });
                 locationMap.src =
-                    "https://maps.googleapis.com/maps/api/staticmap?zoom=18&size=360x170&maptype=roadmap&markers=color:blue%7C%7C" +
+                "https://maps.googleapis.com/maps/api/staticmap?zoom=18&size=360x170&maptype=roadmap&markers=color:blue%7C%7C" +
 _currentLocation["lt"] + "," + _currentLocation["lg"] + "&key=AIzaSyAMfrWKiELcjgQDzNq1n3LTVMSQAXGSs6E";
                 locationMap.onerror = function (e) {
                     KASClient.UI.removeElement(locationMap, location);
