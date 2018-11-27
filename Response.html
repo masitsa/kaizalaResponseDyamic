@@ -446,6 +446,7 @@
                 
                 KASClient.UI.addElement(img, fieldInput);
             }
+			invalidateFooter();
         }
 
         function inflateDetailsView() {
@@ -749,31 +750,31 @@ _currentLocation["lt"] + "," + _currentLocation["lg"] + "&key=AIzaSyAMfrWKiELcjg
                     let fieldInputType = "";
                     var compressedTitle = fieldTitle.replace(/\s+/g, '');
                     
-                    if((fieldTitle != "Logo") && (fieldTitle != "Name") && (fieldTitle != "Phone") && (fieldTitle != "Location") && (fieldTitle != "Response Time"))
-                    {
-                        let formValue = "";
+                    if((fieldTitle != "Name") && (fieldTitle != "Phone") && (fieldTitle != "Location") && (fieldTitle != "Response Time"))
+                    {						
+						let formValue = "";
                         if(fieldType == 0){
                             formValue = selectedOptions[compressedTitle];
+                            
+                            if(formValue !== 0){
+                                if((formValue == "") || (formValue == null)){
+                                    nextButtonIsDisabled = true;
+                                }
+                            }
                         }
-
-                        else if(fieldType == 6){
-                            //formValue = selectedOptions[compressedTitle];
-                            // alert(JSON.stringify(fieldDescription));
-                            // alert(fieldTitle);
-                            // alert(isOptional);
-                            // alert(invis);
-                            // alert(editable);
-                            // alert(er);
-                            // alert(dt);
-                            // document.getElementById("page1").innerHTML = JSON.stringify(fieldDescription);
-                        }
-
+						
                         else{
-                            formValue = document.getElementById(compressedTitle).value;
-                        }
-                        
-                        if((formValue == "") || (formValue == null)){
-                            nextButtonIsDisabled = true;
+							if(fieldType == 6){
+								formValue = document.getElementById(compressedTitle).getAttribute("src");
+							}
+							
+							else{
+								formValue = document.getElementById(compressedTitle).value;
+							}
+							
+							if((formValue == "") || (formValue == null) || (formValue == "AttachmentIcon.png")){
+								nextButtonIsDisabled = true;
+							}
                         }
                     }
                 }
