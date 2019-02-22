@@ -36,6 +36,11 @@
             var _district = "";
             var _longAddress = "";
             var _shortAddress = "";
+            var albumViewModel = new KASClient.UI.KASAlbumViewModel();
+            // albumViewModel.showRemoveButton = false;
+            albumViewModel.hasStaticContent = false;
+            albumViewModel.enableOnTap = false;
+            var albumViewHandler = new KASClient.UI.KASAlbumViewHandler(albumViewModel);
 
             function inflateHeader(questions) {
                 var header = document.getElementById("header");
@@ -43,7 +48,7 @@
 
                 var navigationBar = new KASClient.UI.KASFormPageNavigationBar();
 
-                navigationBar.iconPath = "livestock.png";
+                navigationBar.iconPath = "icon-business.png";
 
                 var mainText = KASClient.UI.getElement("div", {
                     "font-size": "18px",
@@ -255,8 +260,78 @@
 
                         let details;
                         
-                        if(fieldType == 6){
-                            details = questionResponse;
+                        if(fieldType == 8){
+                            //let _images = [];
+                            // details = questionResponse;
+                            // alert(questionResponse);
+                            // let jsonImages = JSON.parse(questionResponse);
+                            // // alert(questionResponse);
+                            // // jsonImages.map((image) => {
+                            // //     _images.push(image['spu']);
+                            // //     if(!image['spu']){
+                            // //         _images.push(image['lpu']); 
+                            // //     }
+                            // // });
+                            // let imagesSubmitted = KASClient.UI.KASImageGridAlbumView("", selectedAttachments[i], false, null, null);
+                            // let imageAttachmentList = JSON.parse(questionResponse);
+                            // var imageInputModule = new KASClient.UI.KASFormModule();
+                            // var imageWrapperDiv = KASClient.UI.getElement("div", { "width": "100%", "height": "224px", "display": "none" });
+                            // if (imageAttachmentList) {
+                            //     if (imageWrapperDiv.style.display == "none") {
+                            //         imageWrapperDiv.style.display = "block";
+                            //         imageWrapperDiv.style.height = "200px";
+                            //     }
+                            //     albumViewHandler.model.imageObjects = imageAttachmentList;
+                            //     albumViewHandler.model.enableOnTap = false;
+                            //     albumViewHandler.refreshAlbumView();
+                            // }
+                            // else {
+                               
+                            //     imageWrapperDiv.style.display = "none";
+                            //     imageWrapperDiv.style.height = "0px";
+                            // }
+                            // alert(JSON.stringify(imageAttachmentList));
+                            // imageWrapperDiv.scrollIntoView();
+                            // alert(4);
+                            // KASClient.UI.addElement(albumViewHandler.getAlbumView(), imageWrapperDiv);
+                            // alert(5);
+                            // imageInputModule.contentView = imageWrapperDiv;
+                            //let _images = [];
+                            // details = questionResponse;
+                            // alert(questionResponse);
+                            // let jsonImages = JSON.parse(questionResponse);
+                            // // alert(questionResponse);
+                            // // jsonImages.map((image) => {
+                            // //     _images.push(image['spu']);
+                            // //     if(!image['spu']){
+                            // //         _images.push(image['lpu']); 
+                            // //     }
+                            // // });
+                            // // let jsonString = JSON.stringify(jsonImages[0]["spu"]);
+                            // // alert(JSON.stringify(_images));
+                            // var _attachmentsList = jsonImages;
+                            // var gridContainerView = KASClient.UI.getElement("div", { "padding-bottom": "5px" });
+                            // var _gridView = new KASClient.UI.KASImageGridAlbumView("", jsonImages, true, null, null);
+                        
+                            // //adds image element to the imageDiv
+                            // KASClient.UI.addElement(_gridView.getView(), gridContainerView);
+                            let jsonImages = JSON.parse(questionResponse);
+                            let img = '<div>';
+                            jsonImages.map((image) => {
+                                // _images.push(image['spu']);
+                                img += "<img src='"+image['spu'] +"' alt='Image' style='width:30%;height:15%;margin-right:3px;'>";
+                            });
+                            img += "</div>";
+
+                            var imageWrapperDiv = KASClient.UI.getElement("div", { 
+                            "display":"flex",
+                            "flex-direction":"column",
+                            "justify-content":"space-around"
+                            });
+                            //alert(img);
+                            imageWrapperDiv.innerHTML = img;
+
+                            KASClient.UI.addElement(imageWrapperDiv, detailsView);
                         }
                         
                         else {

@@ -1,81 +1,75 @@
 {
-    "title": "Livestock Alert",
-    "visibility": "All",
-    "expiry": 0,
-    "isAnonymous": false,
-    "isResponseAppended": true,
-    "isLocationRequested": false,
-    "questions": [
-        {
-            "title": "Livestock Number",
-            "type": "Text",
-            "isOptional": true
+  "title": "Register Business",
+  "visibility": "All",
+  "expiry": 0,
+  "isAnonymous": false,
+  "isResponseAppended": true,
+  "isLocationRequested": false,
+  "questions": [{
+      "title": "Business Location",
+      "type": "Text",
+      "isOptional": true
+    },
+    {
+      "title": "Business Name",
+      "type": "Text",
+      "isOptional": true
+    },
+    {
+      "title": "Category",
+      "type": "SingleSelect",
+      "options": [{
+          "title": "Banks"
         },
         {
-            "title": "Livestock Location",
-            "type": "Numeric",
-            "isOptional": true
+          "title": "Churches"
         },
         {
-            "title": "Livestock Date",
-            "type": "DateTime",
-            "isOptional": true
+          "title": "Service"
         },
         {
-            "title": "Measures Taken",
-            "type": "Text"
+          "title": "Hotels"
         },
         {
-            "title": "Livestock Image",
-            "type": "Image"
-        },
-        {
-            "title": "Herders Number",
-            "type": "Text"
-        },
-        {
-            "title": "Herders Attitude",
-            "type": "Text"
-        },
-        {
-            "title": "Herders Equipment",
-            "type": "Text"
-        },
-        {
-            "title": "Region",
-            "type": "SingleSelect",
-            "options": [{
-                    "title": "Nanyuki"
-                },
-                {
-                    "title": "Meru"
-                },
-                {
-                    "title": "Karatina"
-                },
-                {
-                    "title": "Nyeri"
-                },
-                {
-                    "title": "Embu"
-                }
-            ]
-        },
-        {
-            "title": "Name",
-            "type": "Text"
-        },
-        {
-            "title": "Phone",
-            "type": "Text"
-        },
-        {
-          "title": "Location",
-          "type": "Location"
-        },
-        {
-          "title": "Response Time",
-          "type": "DateTime"
+          "title": "Restaurants"
         }
-    ]
+      ]
+    },
+    {
+      "title": "Phone Number",
+      "type": "Text"
+    },
+    {
+      "valif": null,
+      "visif": "{}",
+      "title": "Business Image",
+      "type": "AttachmentList",
+      "displayType": "None",
+      "config": {
+        "addPageBreak": false,
+        "isCameraOnlyImageSource": false,
+        "attachmentListType": 1
+      },
+      "isInvisible": false,
+      "options": null,
+      "isExcludedFromReporting": false,
+      "isOptional": false
+    },
+    {
+      "title": "Name",
+      "type": "Text"
+    },
+    {
+      "title": "Phone",
+      "type": "Text"
+    },
+    {
+      "title": "Location",
+      "type": "Location"
+    },
+    {
+      "title": "Response Time",
+      "type": "DateTime"
+    }
+  ]
 }
